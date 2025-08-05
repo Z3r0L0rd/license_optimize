@@ -1,0 +1,25 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Installing Python dependencies..."
+        - pip install --upgrade pip
+        - pip install -r requirements.txt
+    build:
+      commands:
+        - echo "Building Streamlit application..."
+        - echo "Build completed successfully"
+    postBuild:
+      commands:
+        - echo "Starting Streamlit server..."
+        - nohup streamlit run streamlit_app.py --server.port 8080 --server.address 0.0.0.0 --server.headless true --server.runOnSave false &
+        - sleep 10
+        - echo "Streamlit server started"
+  artifacts:
+    baseDirectory: /
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - ~/.cache/pip/**/*

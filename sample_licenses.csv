@@ -1,0 +1,6 @@
+license_id,software_name,license_type,total_licenses,used_licenses,expiry_date,cost_per_license
+OFFICE365-001,Microsoft Office 365,SUBSCRIPTION,50,35,2024-12-31,12.50
+ADOBE-CC-001,Adobe Creative Cloud,SUBSCRIPTION,20,8,2024-11-15,52.99
+WINDOWS-001,Windows 11 Pro,PERPETUAL,100,85,,199.99
+SLACK-001,Slack Premium,SUBSCRIPTION,75,25,2025-06-30,8.00
+AUTOCAD-001,AutoCAD Professional,SUBSCRIPTION,10,9,2024-09-15,1800.00
