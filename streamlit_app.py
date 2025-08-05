@@ -22,6 +22,7 @@ from src.advanced_analytics import AdvancedAnalytics
 from src.monitoring import MonitoringSystem
 from src.operations import OperationsManager
 from src.audit_system import AuditSystem
+from src.s3_integration import S3Integration, get_s3_dashboard_data
 
 st.set_page_config(
     page_title="License Optimization System",
@@ -48,7 +49,8 @@ def init_system():
         'advanced_analytics': AdvancedAnalytics(),
         'monitoring': MonitoringSystem(),
         'operations': OperationsManager(),
-        'audit': AuditSystem()
+        'audit': AuditSystem(),
+        's3_integration': S3Integration()
     }
 
 def main():
@@ -73,6 +75,7 @@ def main():
         "⚙️ Operations": "Operations",
         "📄 Audit Reports": "Audit Reports",
         "💾 Data Management": "Data Management",
+        "☁️ S3 Storage": "S3 Storage",
         "🔧 System Setup": "System Setup",
         "📋 View Logs": "View Logs"
     }
@@ -120,6 +123,8 @@ def main():
         show_audit_reports(system)
     elif page == "Data Management":
         show_data_management(system)
+    elif page == "S3 Storage":
+        show_s3_storage(system)
     elif page == "System Setup":
         show_system_setup(system)
     elif page == "View Logs":
@@ -303,6 +308,122 @@ def show_data_management(system):
             if system['importer'].export_to_csv(export_path):
                 with open(export_path, 'rb') as f:
                     st.download_button("Download CSV", f.read(), export_path)
+
+def show_s3_storage(system):
+    st.header("☁️ S3 Storage Management")
+    
+    # S3 Dashboard
+    s3_data = get_s3_dashboard_data()
+    
+    if s3_data:
+        st.subheader("📊 Storage Overview")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Files", s3_data['storage_stats'].get('total_files', 0))
+        with col2:
+            st.metric("Storage Used", f"{s3_data['storage_stats'].get('total_size_mb', 0)} MB")
+        with col3:
+            st.metric("Bucket Name", s3_data.get('bucket_name', 'N/A'))
+        with col4:
+            st.metric("Categories", len(s3_data['storage_stats'].get('categories', {})))
+    
+    # S3 Operations
+    st.subheader("🚀 S3 Operations")
+    
+    tab1, tab2, tab3, tab4 = st.tabs(["Backup to S3", "Export to S3", "File Browser", "Sync Operations"])
+    
+    with tab1:
+        st.write("**Backup License Data to S3**")
+        if st.button("Create S3 Backup"):
+            with st.spinner("Creating backup..."):
+                backup_url = system['s3_integration'].backup_all_licenses()
+                if backup_url:
+                    st.success(f"Backup created successfully!")
+                    st.info(f"S3 URL: {backup_url}")
+                else:
+                    st.error("Backup failed!")
+    
+    with tab2:
+        st.write("**Export Data to S3**")
+        export_format = st.selectbox("Export Format:", ["csv", "json"])
+        
+        if st.button("Export to S3"):
+            with st.spinner("Exporting to S3..."):
+                export_url = system['s3_integration'].export_licenses_to_s3(export_format)
+                if export_url:
+                    st.success(f"Export completed!")
+                    st.info(f"S3 URL: {export_url}")
+                else:
+                    st.error("Export failed!")
+    
+    with tab3:
+        st.write("**S3 File Browser**")
+        
+        # List files by category
+        category = st.selectbox("Browse Category:", ["All Files", "licenses", "exports", "backups", "archive"])
+        prefix = "" if category == "All Files" else f"{category}/"
+        
+        if st.button("Refresh File List"):
+            files = system['s3_integration'].s3_storage.list_files(prefix)
+            
+            if files:
+                st.write(f"Found {len(files)} files:")
+                
+                for file in files[-20:]:  # Show last 20 files
+                    col1, col2, col3, col4 = st.columns([3, 1, 2, 1])
+                    
+                    with col1:
+                        st.write(file['key'])
+                    with col2:
+                        st.write(f"{file['size']} bytes")
+                    with col3:
+                        st.write(file['modified'].strftime('%Y-%m-%d %H:%M'))
+                    with col4:
+                        if st.button("Delete", key=f"del_{file['key']}"):
+                            if system['s3_integration'].s3_storage.delete_file(file['key']):
+                                st.success("Deleted!")
+                                st.rerun()
+                            else:
+                                st.error("Delete failed!")
+            else:
+                st.info("No files found in this category.")
+    
+    with tab4:
+        st.write("**Sync Operations**")
+        
+        if st.button("Full Sync with S3"):
+            with st.spinner("Syncing with S3..."):
+                sync_result = system['s3_integration'].sync_with_s3()
+                
+                if sync_result:
+                    st.success("Sync completed!")
+                    
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        if sync_result['backup_url']:
+                            st.info(f"Backup: {sync_result['backup_url']}")
+                    with col2:
+                        if sync_result['export_url']:
+                            st.info(f"Export: {sync_result['export_url']}")
+                    
+                    st.write(f"Sync time: {sync_result['sync_time']}")
+                else:
+                    st.error("Sync failed!")
+        
+        st.markdown("---")
+        st.write("**Restore from S3 Backup**")
+        
+        backup_key = st.text_input("Backup S3 Key (e.g., backups/licenses_backup_20241201_120000.json):")
+        
+        if st.button("Restore from Backup") and backup_key:
+            with st.spinner("Restoring from backup..."):
+                restored_count = system['s3_integration'].restore_from_backup(backup_key)
+                
+                if restored_count > 0:
+                    st.success(f"Restored {restored_count} licenses from backup!")
+                else:
+                    st.error("Restore failed or no data found!")
 
 def show_system_setup(system):
     st.header("🔧 System Setup")

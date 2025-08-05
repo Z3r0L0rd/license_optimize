@@ -1,154 +1,110 @@
 # 🎯 License Optimization System
 
-## 📋 Mô tả dự án
-Hệ thống theo dõi và tối ưu hóa license phần mềm với chi phí thấp sử dụng AWS.
+Enterprise-grade license management với AWS - Chi phí thấp, hiệu quả cao.
 
-## ✨ Tính năng chính
-- ✅ **License Tracking** - Theo dõi license với CRUD operations
-- ✅ **Usage Analysis** - Phân tích sử dụng và tối ưu hóa
-- ✅ **Compliance Monitoring** - Giám sát tuân thủ và risk assessment
-- ✅ **ML Recommendations** - AI-powered cost optimization
-- ✅ **Executive Dashboard** - Báo cáo tổng quan cho leadership
-- ✅ **Operations Center** - Automated workflows và monitoring
-- ✅ **Audit System** - Change tracking và compliance auditing
-- ✅ **Data Management** - Import/export CSV với auto-setup
+## 🚀 Quick Start (5 phút)
 
-## 🚀 Công nghệ sử dụng
-- **Backend**: Python 3.9+, AWS DynamoDB, S3, CloudWatch
-- **Frontend**: Streamlit với interactive sidebar
-- **ML/Analytics**: Pandas, Plotly, Custom ML algorithms
-- **Infrastructure**: AWS Free Tier services
-
-## 📦 Cài đặt nhanh
-
-### 1. Clone và setup
+### **Bước 1: Clone repository**
 ```bash
-git clone <repository>
+git clone https://github.com/your-username/license-optimization.git
 cd license-optimization
-pip install -r requirements.txt
 ```
 
-### 2. Cấu hình AWS
+### **Bước 2: Setup AWS credentials**
 ```bash
 aws configure
-# Nhập AWS credentials và chọn region us-east-1
+# Nhập AWS Access Key ID và Secret Access Key
 ```
 
-### 3. Chạy ứng dụng
+### **Bước 3: Auto setup**
 ```bash
-python run_app.py
+chmod +x setup.sh
+./setup.sh
 ```
-Truy cập: http://localhost:8501
 
-## 🎯 Sử dụng
-
-### Web Interface (Khuyến nghị)
-- **Dashboard**: Tổng quan metrics và charts
-- **License Management**: CRUD operations với validation
-- **Usage Analysis**: Phân tích underutilized/overutilized
-- **ML Recommendations**: AI-powered cost optimization
-- **Operations**: Daily operations, health check, backup
-- **Data Management**: Import/export CSV với auto-setup
-
-### Command Line
+### **Bước 4: Chạy app**
 ```bash
-cd src
-python main.py
+streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true
 ```
 
-## 💰 Chi phí (AWS Free Tier)
-- **DynamoDB**: 25GB storage miễn phí
-- **S3**: 5GB storage miễn phí  
-- **CloudWatch**: Monitoring cơ bản miễn phí
-- **Tổng**: $0-5/tháng (sau khi hết Free Tier)
-
-## 📊 Kiến trúc hệ thống
-
+### **Bước 5: Truy cập**
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Streamlit     │    │   Core Engine    │    │   AWS Services  │
-│   Web App       │◄──►│   - Tracker      │◄──►│   - DynamoDB    │
-│   - Dashboard   │    │   - Analyzer     │    │   - S3          │
-│   - Management  │    │   - ML Engine    │    │   - CloudWatch  │
-│   - Analytics   │    │   - Operations   │    │                 │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
+http://[EC2-PUBLIC-IP]:8501
 ```
 
-## 🔧 Tính năng nâng cao
-
-### Phase 1: Core System ✅
-- License CRUD operations
-- Usage analysis và compliance
-- Web interface với Streamlit
-- Bulk import/export CSV
-
-### Phase 2: Advanced Analytics ✅  
-- ML-powered recommendations
-- Executive summary reporting
-- Risk assessment và scoring
-- Predictive analytics
-
-### Phase 3: Enterprise Ready ✅
-- Real-time monitoring
-- Automated operations
-- Comprehensive auditing
-- Interactive sidebar với search
-
-## 📁 Cấu trúc project
-
-```
-license-optimization/
-├── src/                    # Core modules
-│   ├── license_tracker.py  # CRUD operations
-│   ├── usage_analyzer.py   # Usage analysis
-│   ├── ml_recommender.py   # ML recommendations
-│   ├── operations.py       # Automated operations
-│   └── audit_system.py     # Audit và compliance
-├── docs/                   # Documentation
-├── config/                 # Configuration files
-├── streamlit_app.py        # Web interface
-├── run_app.py             # App launcher
-└── requirements.txt        # Dependencies
-```
-
-## 🎯 Business Value
-
-### Cost Savings
-- Identify underutilized licenses (tiết kiệm 20-40%)
-- Optimize license allocation
-- Predict future needs
-- Reduce compliance risks
-
-### Operational Excellence  
-- Automated daily operations
-- Real-time health monitoring
-- Comprehensive audit trails
-- Executive-ready reporting
-
-## 🚀 Roadmap
-
-### Completed ✅
-- [x] Core license management
-- [x] Advanced analytics với ML
-- [x] Enterprise operations
-- [x] Interactive web interface
-
-### Future Enhancements
-- [ ] Multi-tenant support
-- [ ] Advanced integrations (LDAP, SSO)
-- [ ] Mobile app
-- [ ] Advanced ML models
-
-## 📞 Hỗ trợ
-
-**Troubleshooting:**
-1. Kiểm tra AWS credentials: `aws sts get-caller-identity`
-2. Xem logs trong folder `logs/`
-3. Sử dụng "System Setup" để tạo database
-4. Import sample data để test
-
-**Documentation:** Xem folder `docs/` để biết thêm chi tiết
+**Xong! App sẵn sàng sử dụng** 🎉
 
 ---
 
-**🎉 Project hoàn thành 100% với tất cả enterprise features!**
+## ✨ Tính năng chính
+
+- ✅ **License Tracking** - CRUD operations với DynamoDB
+- ✅ **Usage Analysis** - Phân tích tối ưu hóa chi phí  
+- ✅ **ML Recommendations** - AI-powered insights
+- ✅ **S3 Storage** - Backup và export tự động
+- ✅ **Compliance Monitoring** - Risk assessment
+- ✅ **Executive Dashboard** - Báo cáo tổng quan
+
+## 💰 Chi phí
+
+- **Free Tier**: $0/tháng (12 tháng đầu)
+- **Sau đó**: ~$5-15/tháng
+- **ROI**: Tiết kiệm 20-40% chi phí license
+
+## 🏗️ Kiến trúc
+
+```
+Streamlit App → DynamoDB + S3 → CloudWatch
+```
+
+## 📊 Tech Stack
+
+- **Backend**: Python 3.9+, AWS SDK (boto3)
+- **Frontend**: Streamlit với interactive UI
+- **Database**: AWS DynamoDB (NoSQL)
+- **Storage**: AWS S3 (backup/export)
+- **Monitoring**: AWS CloudWatch
+
+## 🛠️ Requirements
+
+- Python 3.9+
+- AWS Account (Free Tier)
+- AWS CLI configured
+- EC2 instance (t2.micro)
+
+## 📝 Usage
+
+1. **System Setup** - Tạo database tables
+2. **License Management** - Thêm/sửa/xóa licenses
+3. **Usage Analysis** - Xem báo cáo tối ưu hóa
+4. **ML Recommendations** - AI insights
+5. **S3 Storage** - Backup và restore
+6. **Operations** - Health monitoring
+
+## 🔧 Troubleshooting
+
+### AWS Credentials Error
+```bash
+aws sts get-caller-identity  # Test connection
+aws configure                # Reconfigure if needed
+```
+
+### Module Import Error
+```bash
+./setup.sh                   # Re-run setup script
+```
+
+### Port 8501 Access Error
+- Check EC2 Security Group allows port 8501
+- Use Public IP, not private IP
+
+## 📚 Documentation
+
+- **Technical Documentation**: `TECHNICAL_DOCUMENTATION.md`
+- **Project Report**: `PROJECT_REPORT.md`
+- **Sample Data**: `sample_licenses.csv`
+- **Setup Guide**: This README
+
+---
+
+**🎉 Enterprise-ready license optimization in 5 minutes!**

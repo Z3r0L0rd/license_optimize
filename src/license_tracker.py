@@ -3,21 +3,28 @@ License Tracker - Theo dõi license đơn giản
 """
 
 import boto3
+from .aws_config import get_boto3_client
 import json
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 from decimal import Decimal
 import sys
 import os
-from logger import LicenseLogger
+# Simple config without external dependencies
+DYNAMODB_TABLE_NAME = 'license_optimization_table'
+AWS_REGION = 'us-east-1'
 
-# Thêm config path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from config.config import *
+try:
+    from .logger import LicenseLogger
+except:
+    class LicenseLogger:
+        def info(self, msg): print(f"INFO: {msg}")
+        def error(self, msg): print(f"ERROR: {msg}")
 
 class LicenseTracker:
     def __init__(self):
         """Khởi tạo License Tracker"""
+        # Use default boto3 for EC2 deployment
         self.dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
         self.table_name = DYNAMODB_TABLE_NAME
         self.logger = LicenseLogger()
