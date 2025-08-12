@@ -1,0 +1,6 @@
+license_id,software_name,license_type,total_licenses,used_licenses,expiry_date,cost_per_license
+OFFICE365-001,Microsoft Office 365,SUBSCRIPTION,100,75,2024-12-31,12.50
+ADOBE-CC-002,Adobe Creative Cloud,SUBSCRIPTION,50,35,2024-11-30,52.99
+WINDOWS-SRV-003,Windows Server 2022,PERPETUAL,10,8,2025-06-15,899.00
+AUTOCAD-004,AutoCAD Professional,SUBSCRIPTION,25,20,2024-10-31,1470.00
+VMWARE-005,VMware vSphere,SUBSCRIPTION,15,12,2025-03-31,995.00
